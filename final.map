@@ -1,0 +1,150 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00010000         xr
+SRAM             0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD STM32F103C8_Startup.o
+LOAD Blink.o
+
+.text           0x08000000      0x240
+ *(.isr_vector)
+ .isr_vector    0x08000000      0x124 STM32F103C8_Startup.o
+                0x08000000                Vectors
+ *(.text)
+ .text          0x08000124       0x8c STM32F103C8_Startup.o
+                0x08000124                Reset_Handler
+                0x080001a8                SVCall_Handler
+                0x080001a8                EXTI3_IRQ_Handler
+                0x080001a8                ADC3_IRQ_Handler
+                0x080001a8                USART2_IRQ_Handler
+                0x080001a8                DMA1_Channel5_IRQ_Handler
+                0x080001a8                HardFault_Handler
+                0x080001a8                UART5_IRQ_Handler
+                0x080001a8                SysTick_Handler
+                0x080001a8                I2C1_EV_IRQ_Handler
+                0x080001a8                TIM1_BRK_IRQ_Handler
+                0x080001a8                PendSV_Handler
+                0x080001a8                NMI_Handler
+                0x080001a8                TIM3_IRQ_Handler
+                0x080001a8                USART3_IRQ_Handler
+                0x080001a8                SPI1_IRQ_Handler
+                0x080001a8                TIM2_IRQ_Handler
+                0x080001a8                SDIO_IRQ_Handler
+                0x080001a8                FSMC_IRQ_Handler
+                0x080001a8                TIM1_TRG_COM_IRQ_Handler
+                0x080001a8                DMA1_Channel1_IRQ_Handler
+                0x080001a8                EXTI1_IRQ_Handler
+                0x080001a8                DMA1_Channel6_IRQ_Handler
+                0x080001a8                TIM5_IRQ_Handler
+                0x080001a8                UsageFault_Handler
+                0x080001a8                USB_LP_CAN_RX0_IRQ_Handler
+                0x080001a8                I2C1_ER_IRQ_Handler
+                0x080001a8                USB_HP_CAN_TX_IRQ_Handler
+                0x080001a8                TIM6_IRQ_Handler
+                0x080001a8                EXTI9_5_IRQ_Handler
+                0x080001a8                UART4_IRQ_Handler
+                0x080001a8                CAN_RX1_IRQ_Handler
+                0x080001a8                EXTI4_IRQ_Handler
+                0x080001a8                I2C2_ER_IRQ_Handler
+                0x080001a8                TIM8_UP_IRQ_Handler
+                0x080001a8                TAMPER_IRQ_Handler
+                0x080001a8                I2C2_EV_IRQ_Handler
+                0x080001a8                DMA2_Channel2_IRQ_Handler
+                0x080001a8                EXTI0_IRQ_Handler
+                0x080001a8                PVD_IRQ_Handler
+                0x080001a8                DMA2_Channel3_IRQ_Handler
+                0x080001a8                RTCAlarm_IRQ_Handler
+                0x080001a8                ADC1_2_IRQ_Handler
+                0x080001a8                SPI3_IRQ_Handler
+                0x080001a8                DMA2_Channel1_IRQ_Handler
+                0x080001a8                Default_Handler
+                0x080001a8                TIM4_IRQ_Handler
+                0x080001a8                DMA1_Channel3_IRQ_Handler
+                0x080001a8                RTC_IRQ_Handler
+                0x080001a8                DMA1_Channel2_IRQ_Handler
+                0x080001a8                MemManage_Handler
+                0x080001a8                RCC_IRQ_Handler
+                0x080001a8                USART1_IRQ_Handler
+                0x080001a8                FLASH_IRQ_Handler
+                0x080001a8                DMA1_Channel4_IRQ_Handler
+                0x080001a8                TIM1_UP_IRQ_Handler
+                0x080001a8                WWDG_IRQ_Handler
+                0x080001a8                TIM1_CC_IRQ_Handler
+                0x080001a8                SPI2_IRQ_Handler
+                0x080001a8                CAN_SCE_IRQ_Handler
+                0x080001a8                EXTI15_10_IRQ_Handler
+                0x080001a8                TIM7_IRQ_Handler
+                0x080001a8                EXTI2_IRQ_Handler
+                0x080001a8                BusFault_Handler
+                0x080001a8                DMA2_Channel4_5_IRQ_Handler
+                0x080001a8                TIM8_CC_IRQ_Handler
+                0x080001a8                TIM8_BRK_IRQ_Handler
+                0x080001a8                DebugMonitor_Handler
+                0x080001a8                DMA1_Channel7_IRQ_Handler
+                0x080001a8                TIM8_TRG_COM_IRQ_Handler
+                0x080001a8                USBWakeup_IRQ_Handler
+ .text          0x080001b0       0x8c Blink.o
+                0x080001b0                main
+ *(.rodata)
+ .rodata        0x0800023c        0x4 Blink.o
+                0x0800023c                hello
+                0x08000240                . = ALIGN (0x4)
+                0x08000240                _etext = .
+
+.glue_7         0x08000240        0x0
+ .glue_7        0x08000240        0x0 linker stubs
+
+.glue_7t        0x08000240        0x0
+ .glue_7t       0x08000240        0x0 linker stubs
+
+.vfp11_veneer   0x08000240        0x0
+ .vfp11_veneer  0x08000240        0x0 linker stubs
+
+.v4_bx          0x08000240        0x0
+ .v4_bx         0x08000240        0x0 linker stubs
+
+.iplt           0x08000240        0x0
+ .iplt          0x08000240        0x0 STM32F103C8_Startup.o
+
+.rel.dyn        0x08000240        0x0
+ .rel.iplt      0x08000240        0x0 STM32F103C8_Startup.o
+
+.data           0x20000000        0x4 load address 0x08000240
+                0x20000000                _sdata = .
+ *(.data)
+ .data          0x20000000        0x0 STM32F103C8_Startup.o
+ .data          0x20000000        0x4 Blink.o
+                0x20000000                var
+                0x20000004                . = ALIGN (0x4)
+                0x20000004                _edata = .
+
+.igot.plt       0x20000004        0x0 load address 0x08000244
+ .igot.plt      0x20000004        0x0 STM32F103C8_Startup.o
+
+.bss            0x20000004        0x0 load address 0x08000244
+                0x20000004                _sbss = .
+ *(.bss)
+ .bss           0x20000004        0x0 STM32F103C8_Startup.o
+ .bss           0x20000004        0x0 Blink.o
+ *(COMMON)
+                0x20000004                . = ALIGN (0x4)
+                0x20000004                _ebss = .
+OUTPUT(final.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x4c
+ .comment       0x00000000       0x4c STM32F103C8_Startup.o
+                                 0x4d (size before relaxing)
+ .comment       0x0000004c       0x4d Blink.o
+
+.ARM.attributes
+                0x00000000       0x2d
+ .ARM.attributes
+                0x00000000       0x2d STM32F103C8_Startup.o
+ .ARM.attributes
+                0x0000002d       0x2d Blink.o
