@@ -11,8 +11,10 @@ extern uint32_t _sdata;
 extern uint32_t _edata;
 extern uint32_t _sbss;
 extern uint32_t _ebss;
+extern uint32_t _ld_data;
 
 int main();           //prototype for main
+void __libc_init_array(void); //prototype for library function
 
 //Handlers
 
@@ -174,7 +176,7 @@ void Reset_Handler(void)
 {
 	uint32_t Size = (uint32_t)(&_edata) - (uint32_t)(&_sdata);
 	uint8_t *pDest = (uint8_t*)&_sdata;
-	uint8_t *pSrc = (uint8_t*)&_etext; //Flash
+	uint8_t *pSrc = (uint8_t*)&_ld_data; //Flash
 	for(uint32_t i = 0; i < Size; i++)
 	{
 	   *pDest++ = *pSrc++;	
@@ -182,6 +184,7 @@ void Reset_Handler(void)
 	Size = (uint32_t)(&_ebss) - (uint32_t)(&_sbss);
 	pDest = (uint8_t*)&_sbss;
 	for(uint32_t i = 0; i < Size; i++) *pDest++ = 0;
+	__libc_init_array();
 	main();
 }
 

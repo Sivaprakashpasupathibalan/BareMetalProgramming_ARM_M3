@@ -1,3 +1,4 @@
+#include<stdio.h>
 #define  APB2ENR      (*((volatile unsigned long *)0x40021018U))      //ClockGating Control Register
 #define  GPIOPCCRH    (*((volatile unsigned long *)0x40011004U))      //Port Config Register High
 #define  GPIOPCCRL    (*((volatile unsigned long *)0x40011000U))      //Port Config Register Low
@@ -7,8 +8,10 @@
 
 const int hello = 40;
 int var = 10;
+extern void initialise_monitor_handles(void);
 int main()
 {
+  initialise_monitor_handles();
   APB2ENR |=  (1 << 4);      //Enable clock for C port
   GPIOPCCRH |= (1 << 20);    //setting the register with modes
   GPIOPCCRH |= (0 << 21);
@@ -17,8 +20,10 @@ int main()
   GPIOPCODR |= (0 << 13);   //set output to low
   while(1)
   {
+	printf("LED IS OFF\n");
     GPIOPCODR ^= (0 << 13);   //set output to low
     for(int i = 0; i < 100000; i++);
+	printf("LED IS ON\n");
     GPIOPCODR ^= (1 << 13);   //set output to High
     for(int i = 0; i < 100000; i++);
   }  
